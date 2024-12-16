@@ -5,10 +5,12 @@ import { Link, Redirect } from 'expo-router'
 
 const App = () => {
 
-  return <Redirect href='/home' />
+  //return <Redirect href="/(stack)/home" />
+  //return <Redirect href="/tabs/(stack)/home" />
+  return <Redirect href="/home" />
 
   // return (
-  //   <SafeAreaView className=''>
+  //   <SafeAreaView className=''>r
   //     <View className='flex-auto mt-10 justify-center'>
 
   //       <Text className='text-4xl font-work-black text-primary' >Hola mundo</Text>
