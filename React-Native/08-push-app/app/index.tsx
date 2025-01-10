@@ -17,7 +17,7 @@ const PushApp = () => {
                     fontWeight: 'bold'
                 }}
             >
-                Notificaciones
+                Notificaciones!!!
             </ThemedText>
 
             <FlatList

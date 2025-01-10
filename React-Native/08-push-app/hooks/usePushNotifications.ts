@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { router } from 'expo-router';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -117,16 +118,39 @@ export const usePushNotifications = () => {
 
         areListenersReady = true;
 
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-            setNotifications((prevNotifications) => {
-              const id = notification.request?.identifier || Date.now().toString();
-              if (prevNotifications.some(n => n.request.identifier === id)) {
-                return prevNotifications;
-              }
-              const newNotification = { ...notification, uniqueId: id };
-              return [newNotification, ...prevNotifications];
+
+
+        // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+        //     setNotifications((prevNotifications) => {
+        //         const id = notification.request?.identifier || Date.now().toString();
+        //         if (prevNotifications.some(n => n.request.identifier === id)) {
+        //             return prevNotifications;
+        //         }
+        //         const newNotification = { ...notification, uniqueId: id };
+        //         return [newNotification, ...prevNotifications];
+        //     });
+        // });
+
+        //POR ALGUNA RAZON MUESTRA DOS VECES LA NOTIFICACION, Este codigo fue dado por el maestro || ya funciona, no toque nada
+        notificationListener.current =
+            Notifications.addNotificationReceivedListener((notification) => {
+                console.log('notificationListener', notification);
+
+                setNotifications((prevNotifications) => [
+                    notification,
+                    ...prevNotifications,
+                ]);
             });
-          });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+            console.log(JSON.stringify(response, null, 2));
+
+            const { chatId } = response.notification.request.content.data;
+
+            if (chatId) {
+                router.push(`/chat/${chatId}`);
+            }
+        });
 
         return () => {
             if (notificationListener.current) {
