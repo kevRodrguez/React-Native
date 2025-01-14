@@ -8,14 +8,25 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "jsEngine": "hermes",
     "ios": {
-      "supportsTablet": true
+      "config":{
+        "googleMapsApiKey": "AIzaSyBydu8pkF9pbU-HpnGPNBwkxmV4JYDdNqE"
+      },
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kevrodriguez.mapsapp"
     },
     "android": {
+      "config":{
+        "googleMaps": {
+          "apiKey": "AIzaSyBKqeYNMJCRDQpIOk9Ic2ZE1mpkmzN2ADM"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kevrodriguez.mapsapp"
     },
     "web": {
       "bundler": "metro",
