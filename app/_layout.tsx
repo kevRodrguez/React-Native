@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 
 // Import your global CSS file for nativewind
@@ -16,6 +17,16 @@ import { useThemeColor } from '@/presentation/theme/hooks/useThemeColor';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+// Create a client tan stack query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false, //por si falla la peiticion aca se pone el numero de veces que se va a reintentar
+    },
+  },
+})
+
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -39,18 +50,23 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView  style={{ flex: 1, backgroundColor: backgroundColor }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: backgroundColor }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack
+
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" /> */}
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }

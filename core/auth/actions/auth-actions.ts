@@ -1,4 +1,4 @@
-import { productsApi } from "../api/productsApi";
+import { productsApi } from "../../api/productsApi";
 import { RegisterUser, User } from "../interface/user";
 import { Alert } from "react-native";
 
@@ -41,7 +41,7 @@ export const authLogin = async (email: string, password: string) => {
 
             Alert.alert("Error de inicio de sesión", errorMessage);
         } else {
-            Alert.alert("Error", "Ocurrió un problema desconocido");
+            Alert.alert("Error", "Ocurrió un problema desconocido en el inicio de sesión");
         }
         return null;
     }
@@ -67,7 +67,7 @@ export const authRegister = async (email: string, password: string, fullName: st
             Alert.alert('Error en el registro:', errorMessage);
 
         } else {
-            Alert.alert("Error", "Ocurrió un problema desconocido");
+            Alert.alert("Error", "Ocurrió un problema desconocido en el registro");
         }
         return null;
     }
@@ -85,7 +85,7 @@ export const authCheckStatus = async () => {
             console.log('Error en el authCheckStatus', errorData);
             //Alert.alert("Error de estado", errorData.message);
         } else {
-            Alert.alert("Error", "Ocurrió un problema desconocido");
+            Alert.alert("Error", "Ocurrió un problema desconocido en el authCheckStatus");
         }
         return null;
     }

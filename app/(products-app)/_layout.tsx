@@ -53,6 +53,13 @@ const CheckAuthenticationLayout = () => {
                 }}
 
             />
+            <Stack.Screen
+                name='product/[id]'
+                options={{
+                    title: '', // Se setea en el useEffect por el nombre del producto por id
+                }}
+
+            />
         </Stack>
     )
 }

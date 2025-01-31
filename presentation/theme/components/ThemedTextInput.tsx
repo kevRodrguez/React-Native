@@ -1,16 +1,20 @@
-import { View, TextInputProps, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInputProps, TextInput, TouchableOpacity, StyleSheet, ViewStyle, ViewProps } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet } from 'react-native';
 import { useThemeColor } from '../hooks/useThemeColor';
 
-interface Props extends TextInputProps {
+interface Props extends TextInputProps{
     icon?: keyof typeof Ionicons.glyphMap;
     rightIcon?: keyof typeof Ionicons.glyphMap;
     onRightIconPress?: () => void;
+    
 }
 
-const ThemedTextInput = ({ icon, rightIcon, onRightIconPress, ...rest }: Props) => {
+interface StyleProps extends ViewStyle {
+    style?: ViewStyle; // extiende de ViewProps porque es un estilo de un View y no de un TextInput
+}
+
+const ThemedTextInput = ({ icon, rightIcon, onRightIconPress, style, ...rest }: Props & { style?: StyleProps }) => {
     const primaryColor = useThemeColor({}, 'primary');
     const textColor = useThemeColor({}, 'text');
 
@@ -19,10 +23,13 @@ const ThemedTextInput = ({ icon, rightIcon, onRightIconPress, ...rest }: Props) 
 
     return (
         <View
-            style={{
-                ...styles.border,
-                borderColor: isActive ? primaryColor : '#ccc',
-            }}
+            style={[
+                {
+                    ...styles.border,
+                    borderColor: isActive ? primaryColor : '#ccc',
+                },
+                style,
+            ]}
             onTouchStart={() => inputRef.current?.focus()} // Foco al tocar el contenedor
         >
             {/* Left Icon */}
@@ -69,7 +76,7 @@ const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
         borderRadius: 5,
-        padding: 8,
+        padding:10,
         marginBottom: 10,
         flexDirection: 'row',
         alignItems: 'center',
